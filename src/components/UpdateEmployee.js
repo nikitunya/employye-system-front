@@ -22,7 +22,6 @@ function UpdateEmployee() {
             try{
                 console.log(id);
                 const response = await EmployeeService.getEmployeeById(id);
-                console.log(response);
                 setEmployee(response.data);
             } catch(error){
                 console.log(error);
@@ -32,17 +31,23 @@ function UpdateEmployee() {
     }, []);
 
     const cancel = (e) => {
-        e.preventDefault(); // Not refrest page
-        navigate('/');
+        e.preventDefault(); 
+        navigate('/employees');
     }
 
     const updateEmployee = (e) => {
         e.preventDefault();
+        EmployeeService.updateEmployee(id, employee).then((response) => {
+            console.log(response);
+            navigate("/employees");
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
   return (
-    <div className="flex max-w-2xl shadow mx-auto border-br">
-    <div className="px-8 py-8">
+    <div className="flex items-center justify-center max-w-2xl shadow mx-auto border mt-10 p-4" style={{ overflowX: "hidden" }}>
+    <div className="py-8 w-full">
         <div className="font-thin text-2xl tracking-wider">
             <h1>Update Employee</h1>
         </div>

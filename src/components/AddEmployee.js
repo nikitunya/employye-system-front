@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import EmployeeService from '../services/EmployeeService';
 import { useNavigate } from 'react-router-dom';
-
+import useAuth from '../hooks/useAuth';
+import { useContext } from 'react';
 const AddEmployee = () => {
-
+    const { auth } = useAuth();
     const [employee, setEmployee] = useState({
         id: "",
         firstName: "",
@@ -11,7 +12,7 @@ const AddEmployee = () => {
         emailId: "",
     });
 
-    const naviate = useNavigate();
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const value = e.target.value;
@@ -22,7 +23,7 @@ const AddEmployee = () => {
         e.preventDefault();
         EmployeeService.saveEmployee(employee).then((response) => {
             console.log(response);
-            naviate("/employees");
+            navigate("/employees");
         }).catch((error) => {
             console.log(error);
         })
@@ -39,8 +40,8 @@ const AddEmployee = () => {
     }
 
   return (
-    <div className="flex max-w-2xl shadow mx-auto border-br">
-        <div className="px-8 py-8">
+    <div className="flex items-center justify-center max-w-2xl shadow mx-auto border mt-10 p-4" style={{ overflowX: "hidden" }}>
+        <div className="py-8 w-full">
             <div className="font-thin text-2xl tracking-wider">
                 <h1>Add New Employee</h1>
             </div>
